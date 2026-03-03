@@ -23,7 +23,7 @@ setup('authenticate', async ({ page }) => {
   await page.getByLabel('Team Name').click();
   await page.getByLabel('Team Name').fill(user.teamName);
   await page.getByRole('button', { name: 'Register' }).click();
-  await page.waitForURL('/app');
+  await page.waitForURL('/app/bible');
 
   // log out:
   await page.getByRole('button', { name: 'Open user menu' }).click();
@@ -36,7 +36,7 @@ setup('authenticate', async ({ page }) => {
   await page.getByLabel('Password').click();
   await page.getByLabel('Password').fill(user.password);
   await page.getByRole('button', { name: 'Log in' }).click();
-  await page.waitForURL('/app');
+  await page.waitForURL('/app/bible');
 
   await page.context().storageState({ path: authFile });
 });

@@ -1,6 +1,6 @@
 'use client';
 
-import { BookOpen, Home, MessageCircle, Phone } from 'lucide-react';
+import { BookOpen, MessageCircle, Phone } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -13,11 +13,10 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: 'Accueil', href: '/', icon: Home },
-  { label: 'Bible', href: '/bible', icon: BookOpen },
+  { label: 'Bible', href: '/app/bible', icon: BookOpen },
   {
     label: 'Chapelet',
-    href: '/chapelet',
+    href: '/app/chapelet',
     icon: ({ className, ...props }: React.SVGProps<SVGSVGElement>) => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -38,8 +37,8 @@ const navItems: NavItem[] = [
       </svg>
     ),
   },
-  { label: 'Assistant', href: '/assistant', icon: MessageCircle },
-  { label: 'Allo Pretre', href: '/allo-pretre', icon: Phone },
+  { label: 'Assistant', href: '/app/assistant', icon: MessageCircle },
+  { label: 'Allo Pretre', href: '/app/allo-pretre', icon: Phone },
 ];
 
 export function BottomNav() {
@@ -53,10 +52,7 @@ export function BottomNav() {
     >
       <div className="mx-auto flex h-16 max-w-lg items-center justify-around px-4">
         {navItems.map((item) => {
-          const isActive =
-            item.href === '/'
-              ? pathname === '/'
-              : pathname.startsWith(item.href);
+          const isActive = pathname.startsWith(item.href);
           const Icon = item.icon;
           return (
             <Link

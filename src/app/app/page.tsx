@@ -1,10 +1,5 @@
-import { AppShell } from '@/components/layouts/app-shell';
-import { HomeContent } from '@/features/home/home-content';
+import { redirect } from 'next/navigation';
 
 export default function HomePage() {
-  return (
-    <AppShell>
-      <HomeContent />
-    </AppShell>
-  );
+  redirect('/app/bible');
 }

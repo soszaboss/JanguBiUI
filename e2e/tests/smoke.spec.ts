@@ -10,7 +10,7 @@ test('smoke', async ({ page }) => {
 
   await page.goto('/');
   await page.getByRole('button', { name: 'Get started' }).click();
-  await page.waitForURL('/app');
+  await page.waitForURL('/app/bible');
 
   // create discussion:
   await page.getByRole('link', { name: 'Discussions' }).click();

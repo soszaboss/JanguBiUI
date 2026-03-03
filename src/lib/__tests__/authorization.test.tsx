@@ -1,11 +1,11 @@
-import { Comment, User } from '@/types/api';
-
+import type { User } from '../auth';
 import {
   canCreateDiscussion,
   canDeleteDiscussion,
   canUpdateDiscussion,
   canViewUsers,
   canDeleteComment,
+  type Comment,
 } from '../authorization';
 
 describe('Discussion Authorization', () => {
