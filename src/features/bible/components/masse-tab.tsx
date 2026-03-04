@@ -51,6 +51,7 @@ export function MasseTab() {
         title={selectedReading.type || 'Lecture'}
         reference={selectedReading.citation || ''}
         text={selectedReading.text || ''}
+        isHtml={true}
         onBack={() => setSelectedReading(null)}
       />
     );

@@ -17,17 +17,18 @@ export type GetVersesOptions = {
   offset?: number;
 };
 
-export const getVerses = ({
+export const getVerses = async ({
   bookId,
   chapterNumber,
   ...options
 }: GetVersesOptions): Promise<Verse[]> => {
-  return api.get(
+  const res: any = await api.get(
     `/v1/bible/books/${bookId}/chapters/${chapterNumber}/verses/`,
     {
       params: options,
     },
   );
+  return res.results ?? res;
 };
 
 export const getVersesQueryOptions = (options: GetVersesOptions) => {

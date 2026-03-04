@@ -5,8 +5,9 @@ import { components } from '@/types/api';
 
 export type RosaryGroup = components['schemas']['Group'];
 
-export const getRosaryGroups = (): Promise<RosaryGroup[]> => {
-  return api.get('/v1/rosary/groups/');
+export const getRosaryGroups = async (): Promise<RosaryGroup[]> => {
+  const res: any = await api.get('/v1/rosary/groups/');
+  return res.results ?? res;
 };
 
 export const getRosaryGroupsQueryOptions = () => {

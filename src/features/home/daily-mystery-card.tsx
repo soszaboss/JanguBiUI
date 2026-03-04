@@ -56,7 +56,7 @@ export function DailyMysteryCard() {
       </CardHeader>
       <CardContent className="p-4">
         <Link
-          href="/chapelet"
+          href="/app/chapelet"
           className="bg-background-subtle flex items-center justify-between rounded-lg px-4 py-3 transition-colors hover:bg-secondary"
         >
           <div className="flex items-center gap-3">

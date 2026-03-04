@@ -15,8 +15,9 @@ import {
 import type { Parish } from '@/features/allo-pretre/api/mutations-parish';
 import { api } from '@/lib/api-client';
 
-export const getParishes = (): Promise<Parish[]> => {
-  return api.get('/v1/availability/parishes/');
+export const getParishes = async (): Promise<Parish[]> => {
+  const res: any = await api.get('/v1/availability/parishes/');
+  return res.results ?? res;
 };
 
 export const useParishes = () => {

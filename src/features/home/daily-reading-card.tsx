@@ -38,7 +38,7 @@ export function DailyReadingCard() {
         {todayReadings.map((reading) => (
           <Link
             key={reading.label}
-            href="/bible"
+            href="/app/bible"
             className="hover:bg-background-subtle flex items-center justify-between px-4 py-3 transition-colors"
           >
             <div className="flex flex-col gap-0.5">

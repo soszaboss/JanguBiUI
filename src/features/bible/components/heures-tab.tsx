@@ -64,41 +64,91 @@ export function HeuresTab() {
   const offices = data?.offices || [];
 
   if (selectedOffice) {
-    // Generate text content for the office
-    const textSections = [];
-    if (selectedOffice.hymn) {
-      textSections.push(`HYMNE\n${selectedOffice.hymn}`);
+    const htmlSections: string[] = [];
+    const meta: any = selectedOffice.raw_metadata || {};
+
+    if (meta.introduction) htmlSections.push(`<div>${meta.introduction}</div>`);
+    if (meta.hymne?.texte)
+      htmlSections.push(
+        `<div><h3 class="font-semibold mb-2 text-primary">Hymne</h3>${meta.hymne.texte}</div>`,
+      );
+    if (meta.psaume_1?.texte)
+      htmlSections.push(
+        `<div><h3 class="font-semibold mb-2 text-primary">Psaume 1</h3>${meta.psaume_1.texte}</div>`,
+      );
+    if (meta.psaume_2?.texte)
+      htmlSections.push(
+        `<div><h3 class="font-semibold mb-2 text-primary">Psaume 2</h3>${meta.psaume_2.texte}</div>`,
+      );
+    if (meta.psaume_3?.texte)
+      htmlSections.push(
+        `<div><h3 class="font-semibold mb-2 text-primary">Psaume 3</h3>${meta.psaume_3.texte}</div>`,
+      );
+
+    // Cantiques depending on office
+    if (meta.cantique_zacharie?.texte)
+      htmlSections.push(
+        `<div><h3 class="font-semibold mb-2 text-primary">Cantique de Zacharie</h3>${meta.cantique_zacharie.texte}</div>`,
+      );
+    if (meta.cantique_mariale?.texte)
+      htmlSections.push(
+        `<div><h3 class="font-semibold mb-2 text-primary">Cantique de Marie</h3>${meta.cantique_mariale.texte}</div>`,
+      );
+    if (meta.cantique_symeon?.texte)
+      htmlSections.push(
+        `<div><h3 class="font-semibold mb-2 text-primary">Cantique de Syméon</h3>${meta.cantique_symeon.texte}</div>`,
+      );
+
+    if (meta.pericope?.texte)
+      htmlSections.push(
+        `<div><h3 class="font-semibold mb-2 text-primary">Parole de Dieu</h3><p>${meta.pericope.texte}</p></div>`,
+      );
+    if (meta.repons)
+      htmlSections.push(
+        `<div><h3 class="font-semibold mb-2 text-primary">Répons</h3>${meta.repons}</div>`,
+      );
+
+    if (selectedOffice.intercessions || meta.intercession) {
+      htmlSections.push(
+        `<div><h3 class="font-semibold mb-2 text-primary">Intercessions</h3>${selectedOffice.intercessions || meta.intercession}</div>`,
+      );
     }
-    if (selectedOffice.psalms) {
-      const psalmsText =
-        typeof selectedOffice.psalms === 'string'
-          ? selectedOffice.psalms
-          : JSON.stringify(selectedOffice.psalms, null, 2);
-      textSections.push(`PSAUMES\n${psalmsText}`);
-    }
-    if (selectedOffice.canticle) {
-      textSections.push(`CANTIQUE\n${selectedOffice.canticle}`);
-    }
-    if ('readings' in selectedOffice && selectedOffice.readings) {
-      const readingsText =
-        typeof selectedOffice.readings === 'string'
-          ? selectedOffice.readings
-          : JSON.stringify(selectedOffice.readings, null, 2);
-      textSections.push(`LECTURES\n${readingsText}`);
-    }
-    if (selectedOffice.intercessions) {
-      textSections.push(`INTERCESSIONS\n${selectedOffice.intercessions}`);
+    if (meta.notre_pere)
+      htmlSections.push(
+        `<div><h3 class="font-semibold mb-2 text-primary">Notre Père</h3><p>${meta.notre_pere}</p></div>`,
+      );
+    if (meta.oraison)
+      htmlSections.push(
+        `<div><h3 class="font-semibold mb-2 text-primary">Oraison</h3>${meta.oraison}</div>`,
+      );
+    if (meta.benediction)
+      htmlSections.push(
+        `<div><h3 class="font-semibold mb-2 text-primary">Bénédiction</h3>${meta.benediction}</div>`,
+      );
+
+    // Fallback if raw_metadata is empty
+    if (htmlSections.length === 0) {
+      if (
+        typeof selectedOffice.hymn === 'string' &&
+        !selectedOffice.hymn.startsWith('{')
+      ) {
+        htmlSections.push(selectedOffice.hymn);
+      }
+      if (selectedOffice.intercessions) {
+        htmlSections.push(selectedOffice.intercessions);
+      }
     }
 
-    // Convert to a singular formatted string
-    const fullText =
-      textSections.join('\n\n') || "Contenu de l'office non disponible.";
+    const fullHtml =
+      htmlSections.join('<hr class="my-6 border-muted" />') ||
+      "<p>Contenu de l'office non disponible.</p>";
 
     return (
       <ReadingView
         title={selectedOffice.office_type || 'Office'}
         reference=""
-        text={fullText}
+        text={fullHtml}
+        isHtml={true}
         onBack={() => setSelectedOffice(null)}
       />
     );

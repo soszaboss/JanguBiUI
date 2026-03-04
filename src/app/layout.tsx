@@ -23,7 +23,7 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
         <AppProvider>
           <HydrationBoundary state={dehydratedState}>

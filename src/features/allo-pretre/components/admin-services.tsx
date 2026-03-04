@@ -15,8 +15,9 @@ import {
 import type { ServiceType } from '@/features/allo-pretre/api/mutations-service';
 import { api } from '@/lib/api-client';
 
-export const getServices = (): Promise<ServiceType[]> => {
-  return api.get('/v1/availability/services/');
+export const getServices = async (): Promise<ServiceType[]> => {
+  const res: any = await api.get('/v1/availability/services/');
+  return res.results ?? res;
 };
 
 export const useServices = () => {

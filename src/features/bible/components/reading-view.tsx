@@ -9,6 +9,7 @@ interface ReadingViewProps {
   title: string;
   reference: string;
   text: string;
+  isHtml?: boolean;
   onBack: () => void;
 }
 
@@ -16,6 +17,7 @@ export function ReadingView({
   title,
   reference,
   text,
+  isHtml,
   onBack,
 }: ReadingViewProps) {
   const [fontSize, setFontSize] = useState(16);
@@ -75,12 +77,20 @@ export function ReadingView({
           <h2 className="text-lg font-semibold text-foreground">{title}</h2>
           <p className="text-sm text-primary">{reference}</p>
         </header>
-        <div
-          className="text-foreground-secondary whitespace-pre-line leading-relaxed"
-          style={{ fontSize: `${fontSize}px`, lineHeight: 1.75 }}
-        >
-          {text}
-        </div>
+        {isHtml ? (
+          <div
+            className="text-foreground-secondary whitespace-pre-line leading-relaxed pb-8"
+            style={{ fontSize: `${fontSize}px`, lineHeight: 1.75 }}
+            dangerouslySetInnerHTML={{ __html: text }}
+          />
+        ) : (
+          <div
+            className="text-foreground-secondary whitespace-pre-line leading-relaxed pb-8"
+            style={{ fontSize: `${fontSize}px`, lineHeight: 1.75 }}
+          >
+            {text}
+          </div>
+        )}
       </article>
     </div>
   );

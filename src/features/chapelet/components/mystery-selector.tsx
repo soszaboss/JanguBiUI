@@ -23,12 +23,14 @@ export function MysterySelector({
   onStartGuide,
 }: MysterySelectorProps) {
   // Try to extract individual mystery names from the string
-  const mysteriesList = selectedGroup.mysteries
+  const mysteriesList = Array.isArray(selectedGroup.mysteries)
     ? selectedGroup.mysteries
-        .split(/\r?\n|,/)
-        .map((s) => s.trim())
-        .filter((s) => s.length > 0)
-    : [];
+    : typeof selectedGroup.mysteries === 'string'
+      ? selectedGroup.mysteries
+          .split(/\r?\n|,/)
+          .map((s: string) => s.trim())
+          .filter((s: string) => s.length > 0)
+      : [];
 
   return (
     <div className="flex flex-col gap-6">
@@ -74,17 +76,21 @@ export function MysterySelector({
         </CardHeader>
         <CardContent className="flex flex-col gap-0 p-0">
           {mysteriesList.length > 0 ? (
-            mysteriesList.map((mystery, i) => (
+            mysteriesList.map((mystery: any, i: number) => (
               <div key={i} className="flex items-center gap-3 px-4 py-3">
                 <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-accent/10 text-xs font-semibold text-accent">
                   {i + 1}
                 </span>
-                <span className="text-sm text-foreground">{mystery}</span>
+                <span className="text-sm text-foreground">
+                  {typeof mystery === 'string' ? mystery : mystery.title}
+                </span>
               </div>
             ))
           ) : (
             <div className="p-4 text-sm text-foreground">
-              {selectedGroup.mysteries}
+              {typeof selectedGroup.mysteries === 'string'
+                ? selectedGroup.mysteries
+                : 'Aucun mystère disponible.'}
             </div>
           )}
         </CardContent>

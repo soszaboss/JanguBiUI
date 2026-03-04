@@ -14,10 +14,11 @@ export type SearchBibleOptions = {
   chapter_number?: number | null;
 };
 
-export const searchBible = (
+export const searchBible = async (
   options: SearchBibleOptions,
 ): Promise<SearchResult[]> => {
-  return api.get('/v1/bible/search/', { params: options });
+  const res: any = await api.get('/v1/bible/search/', { params: options });
+  return res.results ?? res;
 };
 
 export const searchBibleQueryOptions = (options: SearchBibleOptions) => {

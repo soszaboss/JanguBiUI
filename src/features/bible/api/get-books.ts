@@ -15,8 +15,12 @@ export type GetBooksOptions = {
   offset?: number;
 };
 
-export const getBooks = (options?: GetBooksOptions): Promise<BookList> => {
-  return api.get('/v1/bible/books/', { params: options });
+export const getBooks = async (
+  options?: GetBooksOptions,
+): Promise<BookList> => {
+  const params = { limit: 100, offset: 0, ...options };
+  const res: any = await api.get('/v1/bible/books/', { params });
+  return res.results ?? res;
 };
 
 export const getBooksQueryOptions = (options?: GetBooksOptions) => {
